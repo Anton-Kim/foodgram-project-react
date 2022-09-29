@@ -1,2 +1,2 @@
 # praktikum_new_diplom
-Начинаю писать Readme
+Начинаю писать Readme!
