@@ -1,11 +1,8 @@
 from datetime import datetime
-
 from django.db.models import Sum
 from django.http import HttpResponse
 from django.shortcuts import get_object_or_404
 from django_filters.rest_framework import DjangoFilterBackend
-from recipes.models import (Favourite, Ingredient, IngredientInRecipe, Recipe,
-                            ShoppingCart, Tag)
 from rest_framework import status
 from rest_framework.decorators import action
 from rest_framework.permissions import SAFE_METHODS, IsAuthenticated
@@ -13,6 +10,8 @@ from rest_framework.response import Response
 from rest_framework.status import HTTP_400_BAD_REQUEST
 from rest_framework.viewsets import ModelViewSet, ReadOnlyModelViewSet
 
+from recipes.models import (Favourite, Ingredient, IngredientInRecipe, Recipe,
+                            ShoppingCart, Tag)
 from .filters import IngredientFilter, RecipeFilter
 from .pagination import CustomPagination
 from .permissions import IsAdminOrReadOnly, IsAuthorOrReadOnly
@@ -22,6 +21,7 @@ from .serializers import (IngredientSerializer, RecipeReadSerializer,
 
 
 class IngredientViewSet(ReadOnlyModelViewSet):
+    """Вьюсет для модели ингридиента"""
     queryset = Ingredient.objects.all()
     serializer_class = IngredientSerializer
     permission_classes = (IsAdminOrReadOnly,)
@@ -30,12 +30,14 @@ class IngredientViewSet(ReadOnlyModelViewSet):
 
 
 class TagViewSet(ReadOnlyModelViewSet):
+    """Вьюсет для модели тега"""
     queryset = Tag.objects.all()
     serializer_class = TagSerializer
     permission_classes = (IsAdminOrReadOnly,)
 
 
 class RecipeViewSet(ModelViewSet):
+    """Вьюсет для модели рецепта"""
     queryset = Recipe.objects.all()
     permission_classes = (IsAuthorOrReadOnly | IsAdminOrReadOnly,)
     pagination_class = CustomPagination
@@ -56,6 +58,7 @@ class RecipeViewSet(ModelViewSet):
         permission_classes=[IsAuthenticated]
     )
     def favorite(self, request, pk):
+        """Метод для добавления/удаления из избранного"""
         if request.method == 'POST':
             return self.add_to(Favourite, request.user, pk)
         else:
@@ -67,12 +70,14 @@ class RecipeViewSet(ModelViewSet):
         permission_classes=[IsAuthenticated]
     )
     def shopping_cart(self, request, pk):
+        """Метод для добавления/удаления из списка покупок"""
         if request.method == 'POST':
             return self.add_to(ShoppingCart, request.user, pk)
         else:
             return self.delete_from(ShoppingCart, request.user, pk)
 
     def add_to(self, model, user, pk):
+        """Метод для добавления"""
         if model.objects.filter(user=user, recipe__id=pk).exists():
             return Response({'errors': 'Рецепт уже добавлен!'},
                             status=status.HTTP_400_BAD_REQUEST)
@@ -82,6 +87,7 @@ class RecipeViewSet(ModelViewSet):
         return Response(serializer.data, status=status.HTTP_201_CREATED)
 
     def delete_from(self, model, user, pk):
+        """Метод для удаления"""
         obj = model.objects.filter(user=user, recipe__id=pk)
         if obj.exists():
             obj.delete()
@@ -94,6 +100,7 @@ class RecipeViewSet(ModelViewSet):
         permission_classes=[IsAuthenticated]
     )
     def download_shopping_cart(self, request):
+        """Метод для скачивания списка покупок"""
         user = request.user
         if not user.shopping_cart.exists():
             return Response(status=HTTP_400_BAD_REQUEST)

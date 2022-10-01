@@ -1,14 +1,16 @@
 from django.contrib.auth import get_user_model
 from django.db.models import F
 from django.shortcuts import get_object_or_404
-from djoser.serializers import UserCreateSerializer, UserSerializer
-from drf_extra_fields.fields import Base64ImageField
-from recipes.models import Ingredient, IngredientInRecipe, Recipe, Tag
 from rest_framework import status
 from rest_framework.exceptions import ValidationError
 from rest_framework.fields import IntegerField, SerializerMethodField
 from rest_framework.relations import PrimaryKeyRelatedField
 from rest_framework.serializers import ModelSerializer
+
+from djoser.serializers import UserCreateSerializer, UserSerializer
+from drf_extra_fields.fields import Base64ImageField
+
+from recipes.models import Ingredient, IngredientInRecipe, Recipe, Tag
 from users.models import Subscribe
 
 User = get_user_model()
@@ -85,13 +87,13 @@ class SubscribeSerializer(CustomUserSerializer):
 class IngredientSerializer(ModelSerializer):
     class Meta:
         model = Ingredient
-        fields = '__all__'
+        fields = ('id', 'name', 'measurement_unit')
 
 
 class TagSerializer(ModelSerializer):
     class Meta:
         model = Tag
-        fields = '__all__'
+        fields = ('id', 'name', 'color', 'slug')
 
 
 class RecipeReadSerializer(ModelSerializer):
@@ -194,13 +196,11 @@ class RecipeWriteSerializer(ModelSerializer):
             raise ValidationError({
                 'tags': 'Нужно выбрать хотя бы один тег!'
             })
-        tags_list = []
-        for tag in tags:
-            if tag in tags_list:
-                raise ValidationError({
-                    'tags': 'Теги должны быть уникальными!'
-                })
-            tags_list.append(tag)
+        tags_set = set(tags)
+        if len(tags) != len(tags_set):
+            raise ValidationError({
+                'tags': 'Теги должны быть уникальными!'
+            })
         return value
 
     def create_ingredients_amounts(self, ingredients, recipe):

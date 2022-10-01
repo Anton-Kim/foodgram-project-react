@@ -14,6 +14,7 @@ User = get_user_model()
 
 
 class CustomUserViewSet(UserViewSet):
+    """Вьюсет для кастомной модели пользователя"""
     queryset = User.objects.all()
     serializer_class = CustomUserSerializer
     pagination_class = CustomPagination
@@ -24,6 +25,7 @@ class CustomUserViewSet(UserViewSet):
         permission_classes=[IsAuthenticated]
     )
     def subscribe(self, request, **kwargs):
+        """Метод для подписки/отписки от автора"""
         user = request.user
         author_id = self.kwargs.get('id')
         author = get_object_or_404(User, id=author_id)
@@ -48,6 +50,7 @@ class CustomUserViewSet(UserViewSet):
         permission_classes=[IsAuthenticated]
     )
     def subscriptions(self, request):
+        """Метод для просмотра подписок на авторов"""
         user = request.user
         queryset = User.objects.filter(subscribing__user=user)
         pages = self.paginate_queryset(queryset)

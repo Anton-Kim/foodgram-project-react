@@ -4,6 +4,7 @@ from django.db.models import UniqueConstraint
 
 
 class User(AbstractUser):
+    """Кастомная модель пользователя"""
     USERNAME_FIELD = 'email'
     REQUIRED_FIELDS = [
         'username',
@@ -11,13 +12,13 @@ class User(AbstractUser):
         'last_name',
     ]
     email = models.EmailField(
-        'email address',
+        'Адрес электронной почты',
         max_length=254,
         unique=True,
     )
 
     class Meta:
-        ordering = ['id']
+        ordering = ('id',)
         verbose_name = 'Пользователь'
         verbose_name_plural = 'Пользователи'
 
@@ -26,6 +27,7 @@ class User(AbstractUser):
 
 
 class Subscribe(models.Model):
+    """Модель подписки на авторов"""
     user = models.ForeignKey(
         User,
         related_name='subscriber',
@@ -40,7 +42,7 @@ class Subscribe(models.Model):
     )
 
     class Meta:
-        ordering = ['-id']
+        ordering = ('-id',)
         constraints = [
             UniqueConstraint(fields=['user', 'author'],
                              name='unique_subscription')
