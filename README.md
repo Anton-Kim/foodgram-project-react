@@ -8,9 +8,9 @@
 
 **Foodgram** - приложение в котором пользователи могут публиковать рецепты, добавлять чужие рецепты в избранное и подписываться на публикации других авторов. Сервис «Foodgram» позволяет пользователям создавать список продуктов, которые нужно купить для приготовления выбранных блюд.
 
-Проект доступен по [адресу](http://antonkim.design/)<br>
-Документация к API доступна [здесь](http://antonkim.design/api/docs/)<br>
-Админ-зона [здесь](http://antonkim.design/admin/)<br>
+Проект доступен по адресу [antonkim.design](http://antonkim.design/)<br>
+Документация к API доступна [antonkim.design/api/docs](http://antonkim.design/api/docs/)<br>
+Админ-зона [antonkim.design/admin](http://antonkim.design/admin/)<br>
 - Логин: admin
 - Пароль: Qwerty00
 
