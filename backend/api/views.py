@@ -128,4 +128,5 @@ class RecipeViewSet(ModelViewSet):
             shopping_list, content_type='text.txt; charset=utf-8'
         )
         response['Content-Disposition'] = f'attachment; filename={filename}'
+
         return response
