@@ -39,7 +39,7 @@ class TagViewSet(ReadOnlyModelViewSet):
 class RecipeViewSet(ModelViewSet):
     """Вьюсет для модели рецепта"""
     queryset = Recipe.objects.all()
-    permission_classes = (IsAdminOrReadOnly,)
+    permission_classes = (IsAdminAuthorOrReadOnly,)
     pagination_class = CustomPagination
     filter_backends = (DjangoFilterBackend,)
     filterset_class = RecipeFilter
