@@ -913,7 +913,7 @@ components:
           format: email
           maxLength: 254
           description: "Адрес электронной почты"
-          example: "vpupkin@yandex.ru"
+          example: "leo@mail.ru"
         id:
           type: integer
           readOnly: true
@@ -922,22 +922,22 @@ components:
           description: "Уникальный юзернейм"
           pattern: ^[\w.@+-]+\z
           maxLength: 150
-          example: "vasya.pupkin"
+          example: "leo"
         first_name:
           type: string
           maxLength: 150
           description: "Имя"
-          example: "Вася"
+          example: "Лев"
         last_name:
           type: string
           maxLength: 150
           description: "Фамилия"
-          example: "Пупкин"
+          example: "Лев Борщевик"
         password:
           type: string
           maxLength: 150
           description: "Пароль"
-          example: "Qwerty123"
+          example: "Qwerty_00"
       required:
         - username
         - password

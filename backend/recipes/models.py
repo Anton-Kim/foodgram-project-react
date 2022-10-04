@@ -64,7 +64,7 @@ class Recipe(models.Model):
         'Время приготовления',
         validators=[
             MinValueValidator(1, message='Минимальное значение 1!'),
-            MaxValueValidator(10000, message='Максимальное значение 10000!')
+            MaxValueValidator(600, message='Максимальное значение 10000!')
         ]
     )
     ingredients = models.ManyToManyField(
