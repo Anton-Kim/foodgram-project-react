@@ -14,7 +14,8 @@ from recipes.models import (Favourite, Ingredient, IngredientInRecipe, Recipe,
                             ShoppingCart, Tag)
 from .filters import IngredientFilter, RecipeFilter
 from .pagination import CustomPagination
-from .permissions import IsAdminOrReadOnly, IsAdminAuthorOrReadOnly, IsAdminOrOwner
+from .permissions import (IsAdminOrReadOnly, IsAdminAuthorOrReadOnly,
+                          IsAdminOrOwner)
 from .serializers import (IngredientSerializer, RecipeReadSerializer,
                           RecipeShortSerializer, RecipeWriteSerializer,
                           TagSerializer)
