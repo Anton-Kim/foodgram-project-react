@@ -14,8 +14,7 @@ from recipes.models import (Favourite, Ingredient, IngredientInRecipe, Recipe,
                             ShoppingCart, Tag)
 from .filters import IngredientFilter, RecipeFilter
 from .pagination import CustomPagination
-from .permissions import (IsAdminOrReadOnly, IsAdminAuthorOrReadOnly,
-                          IsAdminOrOwner)
+from .permissions import IsAdminOrReadOnly, IsAdminAuthorOrReadOnly
 from .serializers import (IngredientSerializer, RecipeReadSerializer,
                           RecipeShortSerializer, RecipeWriteSerializer,
                           TagSerializer)
@@ -52,13 +51,6 @@ class RecipeViewSet(ModelViewSet):
         if self.request.method in SAFE_METHODS:
             return RecipeReadSerializer
         return RecipeWriteSerializer
-
-    @action(detail=True, methods=['get'], permission_classes=[IsAdminOrOwner],
-            url_path='recipe/(?P<recipe_pk>[^/.]+)/edit/')
-    def edit(self, request, recipe_pk, pk=None):
-        recipe = get_object_or_404(Recipe, id=recipe_pk)
-        serializer = self.get_serializer(recipe, many=False)
-        return Response(serializer.data)
 
     @action(
         detail=True,
