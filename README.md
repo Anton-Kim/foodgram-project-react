@@ -11,8 +11,6 @@
 Проект доступен по адресу [antonkim.design](http://antonkim.design/)<br>
 Документация к API доступна [antonkim.design/api/docs](http://antonkim.design/api/docs/)<br>
 Админ-зона [antonkim.design/admin](http://antonkim.design/admin/)<br>
-- Логин: admin@mail.ru
-- Пароль: Qwerty00
 
 ## ⚙ Используемые технологии:
 
@@ -49,6 +47,21 @@ scp docker-compose.yml nginx.conf <username>@<IP>:/home/<username>/   # username
                                                                       # IP - публичный IP сервера
 ```
 
+Создать файл .env и заполнить своими данными:
+```
+touch .env
+nano .env
+```
+```
+DB_ENGINE=django.db.backends.postgresql
+DB_NAME=postgres
+POSTGRES_USER=postgres
+POSTGRES_PASSWORD=postgres
+DB_HOST=db
+DB_PORT=5432
+SECRET_KEY=1234567890
+```
+
 Создать и запустить контейнеры Docker, выполнить команду на сервере
 *(версии команд "docker compose" или "docker-compose" отличаются в зависимости от установленной версии Docker Compose):*
 ```
@@ -75,6 +88,11 @@ sudo docker compose exec backend python manage.py collectstatic --noinput
 ```
 sudo docker compose exec backend python manage.py loaddata ingredients.json
 ```
+
+### Voilà! Ваш сервер работает! 😸
+Не забудьте добавить теги для блюд в админ-панели your-host/admin/
+<br><br>
+
 
 Для остановки контейнеров Docker:
 ```
@@ -123,7 +141,7 @@ POSTGRES_USER=postgres
 POSTGRES_PASSWORD=postgres
 DB_HOST=db
 DB_PORT=5432
-SECRET_KEY='секретный ключ Django'
+SECRET_KEY=1234567890
 ```
 
 Создать и запустить контейнеры Docker, как указано выше.
